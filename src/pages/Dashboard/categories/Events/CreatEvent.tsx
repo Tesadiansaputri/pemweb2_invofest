@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import FormInput from "../../../../components/FormInput";
 import Button from "../../../../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   nama: z.string().min(1, "Nama harus diisi"),
@@ -12,28 +13,106 @@ const schema = z.object({
   deskripsi: z.string().min(1, "Deskripsi harus diisi"),
 });
 
+type FormData = z.infer<typeof schema>;
+
 export default function CreateEvent() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
+  const onSubmit = (data: FormData) => {
+
+    const oldData =
+      JSON.parse(localStorage.getItem("events") || "[]");
+
+    const newEvent = {
+      id: Date.now(),
+      ...data,
+    };
+
+    const updatedData = [...oldData, newEvent];
+
+    localStorage.setItem(
+      "events",
+      JSON.stringify(updatedData)
+    );
+
+    navigate("/dashboard/event");
+  };
+
   return (
     <div className="max-w-lg mx-auto py-10">
-      <h1 className="text-2xl font-bold text-slate-800 mb-6">Create New Event</h1>
-      <form onSubmit={handleSubmit(console.log)} className="flex flex-col gap-4">
-        <FormInput text="Nama" type="text" name="nama" register={register} error={errors.nama?.message} />
-        <FormInput text="Category" type="text" name="category" register={register} error={errors.category?.message} />
-        <FormInput text="Lokasi" type="text" name="lokasi" register={register} error={errors.lokasi?.message} />
-        <FormInput text="Tanggal" type="date" name="tanggal" register={register} error={errors.tanggal?.message} />
+
+      <h1 className="text-2xl font-bold text-slate-800 mb-6">
+        Create New Event
+      </h1>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+
+        <FormInput
+          text="Nama"
+          type="text"
+          name="nama"
+          register={register}
+          error={errors.nama?.message}
+        />
+
+        <FormInput
+          text="Category"
+          type="text"
+          name="category"
+          register={register}
+          error={errors.category?.message}
+        />
+
+        <FormInput
+          text="Lokasi"
+          type="text"
+          name="lokasi"
+          register={register}
+          error={errors.lokasi?.message}
+        />
+
+        <FormInput
+          text="Tanggal"
+          type="date"
+          name="tanggal"
+          register={register}
+          error={errors.tanggal?.message}
+        />
+
+        {/* DESKRIPSI */}
         <div className="flex flex-col gap-1">
-          <label className="text-slate-600 font-medium">Deskripsi</label>
+
+          <label className="text-slate-600 font-medium">
+            Deskripsi
+          </label>
+
           <textarea
             {...register("deskripsi")}
             className="border rounded px-3 py-2 w-full min-h-24 focus:outline-none focus:ring-2 focus:ring-red-900"
           />
-          {errors.deskripsi && <p className="text-red-500 text-sm">{errors.deskripsi.message}</p>}
+
+          {errors.deskripsi && (
+            <p className="text-red-500 text-sm">
+              {errors.deskripsi.message}
+            </p>
+          )}
+
         </div>
+
         <Button label="Simpan" variant="primary" />
+
       </form>
     </div>
   );

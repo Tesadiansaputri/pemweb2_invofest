@@ -1,38 +1,89 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import FormInput from "../../../../components/FormInput";
-import Button from "../../../../components/ui/Button";
-
-const schema = z.object({
-  nama: z.string().min(1, "Nama harus diisi"),
-  role: z.string().min(1, "Role harus diisi"),
-  foto: z.any(),
-});
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateSpeaker() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: zodResolver(schema),
-  });
+
+  const [name, setName] = useState("");
+  const [profession, setProfession] = useState("");
+  const [photo, setPhoto] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+
+    const oldData =
+      JSON.parse(localStorage.getItem("speakers") || "[]");
+
+    const newSpeaker = {
+      id: Date.now(),
+      name,
+      profession,
+      photo,
+    };
+
+    const updatedData = [...oldData, newSpeaker];
+
+    localStorage.setItem(
+      "speakers",
+      JSON.stringify(updatedData)
+    );
+
+    navigate("/dashboard/speaker");
+  };
 
   return (
-    <div className="max-w-lg mx-auto py-10">
-      <h1 className="text-2xl font-bold text-slate-800 mb-6">Create New Speaker</h1>
-      <form onSubmit={handleSubmit(console.log)} className="flex flex-col gap-4">
-        <FormInput text="Nama" type="text" name="nama" register={register} error={errors.nama?.message} />
-        <FormInput text="Role" type="text" name="role" register={register} error={errors.role?.message} />
-        <div className="flex flex-col gap-1">
-          <label className="text-slate-600 font-medium">Foto</label>
+    <div className="p-6">
+
+      <h1 className="text-3xl font-bold mb-6">
+        Create Speaker
+      </h1>
+
+      <div className="bg-white p-6 rounded-2xl shadow max-w-xl space-y-5">
+
+        <div className="flex flex-col gap-2">
+          <label>Name</label>
+
           <input
-            type="file"
-            accept="image/*"
-            {...register("foto")}
-            className="border rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-red-900"
+            type="text"
+            placeholder="Input speaker name..."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="border p-3 rounded-xl"
           />
         </div>
-        <Button label="Simpan" variant="primary" />
-      </form>
+
+        <div className="flex flex-col gap-2">
+          <label>Role</label>
+
+          <input
+            type="text"
+            placeholder="Input Role..."
+            value={profession}
+            onChange={(e) => setProfession(e.target.value)}
+            className="border p-3 rounded-xl"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label>Foto</label>
+
+          <input
+            type="text"
+            placeholder="Input Foto..."
+            value={photo}
+            onChange={(e) => setPhoto(e.target.value)}
+            className="border p-3 rounded-xl"
+          />
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="bg-pink-500 text-white px-5 py-3 rounded-xl"
+        >
+          Save Speaker
+        </button>
+
+      </div>
     </div>
   );
 }
-
