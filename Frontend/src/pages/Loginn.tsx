@@ -22,7 +22,7 @@ export default function Loginn() {
     const login = useAuthStore((state) => state.login); // ✅ Tetap pakai
 
     const onSubmit = (data: FormSchema) => {
-        if (data.email === "admin@gmail.com" && data.password === "password123") {
+        if (data.email === "Tesadiansaputri@gmail.com" && data.password === "24090120") {
             login(data.email); // ✅ Panggil login dari store
             alert("Login Sukses");
             navigate("/dashboard");

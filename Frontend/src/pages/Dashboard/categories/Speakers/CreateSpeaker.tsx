@@ -7,9 +7,42 @@ export default function CreateSpeaker() {
   const [profession, setProfession] = useState("");
   const [photo, setPhoto] = useState("");
 
+  // ERROR PER FIELD
+  const [nameError, setNameError] = useState("");
+  const [professionError, setProfessionError] = useState("");
+  const [photoError, setPhotoError] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = () => {
+
+    let isValid = true;
+
+    // reset error dulu
+    setNameError("");
+    setProfessionError("");
+    setPhotoError("");
+
+    // VALIDASI NAME
+    if (!name) {
+      setNameError("Nama harus diisi");
+      isValid = false;
+    }
+
+    // VALIDASI PROFESSION
+    if (!profession) {
+      setProfessionError("Role harus diisi");
+      isValid = false;
+    }
+
+    // VALIDASI PHOTO
+    if (!photo) {
+      setPhotoError("Foto harus diisi");
+      isValid = false;
+    }
+
+    // kalau ada yang kosong, stop
+    if (!isValid) return;
 
     const oldData =
       JSON.parse(localStorage.getItem("speakers") || "[]");
@@ -40,6 +73,7 @@ export default function CreateSpeaker() {
 
       <div className="bg-white p-6 rounded-2xl shadow max-w-xl space-y-5">
 
+        {/* NAME */}
         <div className="flex flex-col gap-2">
           <label>Name</label>
 
@@ -50,8 +84,15 @@ export default function CreateSpeaker() {
             onChange={(e) => setName(e.target.value)}
             className="border p-3 rounded-xl"
           />
+
+          {nameError && (
+            <p className="text-red-600 text-sm">
+              {nameError}
+            </p>
+          )}
         </div>
 
+        {/* ROLE */}
         <div className="flex flex-col gap-2">
           <label>Role</label>
 
@@ -62,8 +103,15 @@ export default function CreateSpeaker() {
             onChange={(e) => setProfession(e.target.value)}
             className="border p-3 rounded-xl"
           />
+
+          {professionError && (
+            <p className="text-red-600 text-sm">
+              {professionError}
+            </p>
+          )}
         </div>
 
+        {/* FOTO */}
         <div className="flex flex-col gap-2">
           <label>Foto</label>
 
@@ -74,11 +122,17 @@ export default function CreateSpeaker() {
             onChange={(e) => setPhoto(e.target.value)}
             className="border p-3 rounded-xl"
           />
+
+          {photoError && (
+            <p className="text-red-600 text-sm">
+              {photoError}
+            </p>
+          )}
         </div>
 
         <button
           onClick={handleSubmit}
-          className="bg-pink-500 text-white px-5 py-3 rounded-xl"
+          className="bg-red-700 text-white px-5 py-3 rounded-xl"
         >
           Save Speaker
         </button>

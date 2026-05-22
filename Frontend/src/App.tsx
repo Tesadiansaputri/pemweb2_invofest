@@ -16,6 +16,7 @@ import DashboardLayout from "./layouts/DashboardLayout"; // ✅ Tambah import
 import CategoryList from "./pages/Dashboard/categories/CategoryList";
 import SpeakerList from "./pages/Dashboard/categories/Speakers/SpeakerList";
 import EventList from "./pages/Dashboard/categories/Events/EventList";
+import Biodata from "./pages/Biodata/Biodata";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/competition" element={<Competition />} />
           <Route path="/seminar" element={<Seminar />} />
           <Route path="/talkshow" element={<Talkshow />} />
+          
         </Route>
 
         {/* Auth Routes */}
@@ -39,6 +41,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}> {/* ✅ Struktur nested yang benar */}
             <Route path="/dashboard" element={<Dashboardindex />} />
+            <Route path="/dashboard/biodata" element={<Biodata />} />
             <Route path="/dashboard/category" element={<CategoryList />} />
             <Route path="/dashboard/category/create" element={<CreateCategory />} />
             <Route path="/dashboard/speaker" element={<SpeakerList />} />

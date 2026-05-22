@@ -14,7 +14,7 @@ export default function DashboardLayout() {
     <div className="flex min-h-screen">
 
       {/* kiri */}
-      <div className="min-h-screen bg-pink-400 w-64 flex flex-col p-4">
+      <div className="min-h-screen bg-[#800020] w-64 flex flex-col p-4">
 
         <div className="border-b border-gray-100 py-6">
           <h1 className="text-white text-2xl font-bold">
@@ -45,7 +45,7 @@ export default function DashboardLayout() {
         <div>
           <button
             onClick={handleLogout}
-            className="bg-red-400 p-4 w-full hover:bg-red-500 cursor-pointer"
+            className="bg-[#800020] p-4 w-full hover:bg-red-500 cursor-pointer text-amber-50"
           >
             Logout
           </button>
