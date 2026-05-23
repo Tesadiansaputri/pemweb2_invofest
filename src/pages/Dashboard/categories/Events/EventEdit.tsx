@@ -17,7 +17,7 @@ export default function EventEdit() {
   // AMBIL DATA DARI BACKEND
   useEffect(() => {
     // Ambil data event
-    fetch(`http://localhost:3000/events/${id}`)
+    fetch(`https://be-production-16db.up.railway.app/events/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setName(data.name);
@@ -33,7 +33,7 @@ export default function EventEdit() {
       });
 
     // Ambil dropdown category
-    fetch("http://localhost:3000/categories")
+    fetch("https://be-production-16db.up.railway.app/categories")
       .then((res) => res.json())
       .then((data) => setCategories(Array.isArray(data) ? data : []));
   }, [id, navigate]);
@@ -50,7 +50,7 @@ export default function EventEdit() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/events/${id}`, {
+      const response = await fetch(`https://be-production-16db.up.railway.app/events/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

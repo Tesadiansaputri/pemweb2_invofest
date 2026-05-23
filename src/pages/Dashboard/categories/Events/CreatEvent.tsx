@@ -24,11 +24,11 @@ export default function CreateEvent() {
 
   // AMBIL DROPDOWN DARI BACKEND
   useEffect(() => {
-    fetch("http://localhost:3000/categories")
+    fetch("https://be-production-16db.up.railway.app/categories")
       .then((res) => res.json())
       .then((data) => setCategories(Array.isArray(data) ? data : []));
 
-    fetch("http://localhost:3000/speakers")
+    fetch("https://be-production-16db.up.railway.app/speakers")
       .then((res) => res.json())
       .then((data) => setSpeakers(Array.isArray(data) ? data : []));
   }, []);
@@ -43,7 +43,7 @@ export default function CreateEvent() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch("http://localhost:3000/events", {
+      const response = await fetch("https://be-production-16db.up.railway.app/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

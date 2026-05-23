@@ -13,7 +13,7 @@ export default function SpeakerEdit() {
 
   // AMBIL DATA LAMA
   useEffect(() => {
-    fetch(`http://localhost:3000/speakers/${id}`)
+    fetch(`https://be-production-16db.up.railway.app/speakers/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setName(data.name);
@@ -37,7 +37,7 @@ export default function SpeakerEdit() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/speakers/${id}`, {
+      const response = await fetch(`https://be-production-16db.up.railway.app/speakers/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, role, image }),

@@ -7,7 +7,7 @@ export default function SpeakerList() {
 
   // AMBIL DATA DARI BACKEND
   useEffect(() => {
-    fetch("http://localhost:3000/speakers")
+    fetch("https://be-production-16db.up.railway.app/speakers")
       .then((res) => res.json())
       .then((data) => setSpeakers(Array.isArray(data) ? data : []))
       .catch(() => alert("Gagal mengambil data speaker"));
@@ -19,7 +19,7 @@ export default function SpeakerList() {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/speakers/${id}`, {
+      const response = await fetch(`https://be-production-16db.up.railway.app/speakers/${id}`, {
         method: "DELETE",
       });
 

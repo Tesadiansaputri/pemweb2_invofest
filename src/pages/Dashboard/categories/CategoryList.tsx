@@ -7,7 +7,7 @@ export default function CategoryList() {
 
   // AMBIL DATA DARI BACKEND
   useEffect(() => {
-    fetch("http://localhost:3000/categories")
+    fetch("https://be-production-16db.up.railway.app/categories")
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch(() => alert("Gagal mengambil data category"));
@@ -19,7 +19,7 @@ export default function CategoryList() {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/categories/${id}`, {
+      const response = await fetch(`https://be-production-16db.up.railway.app/categories/${id}`, {
         method: "DELETE",
       });
 
